@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     public Button connexion;
     public TextView etat;
 
-    public BluetoothConnector bluetoothConnector = new BluetoothConnector(this);
+    public BluetoothConnector bluetoothConnector;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         connexion = (Button) findViewById(R.id.connexion);
         etat = (TextView) findViewById(R.id.etat);
+        bluetoothConnector = new BluetoothConnector(this);
     }
 
     public void connexionAdmin(View view){

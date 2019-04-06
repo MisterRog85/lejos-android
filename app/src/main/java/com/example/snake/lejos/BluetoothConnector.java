@@ -4,10 +4,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.view.View;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.UUID;
 
@@ -17,7 +19,7 @@ public class BluetoothConnector{
     private BluetoothSocket socket_nxt;
     private BluetoothDevice nxt;
     private OutputStreamWriter out;
-    private String nxtMAC = "00:16:53:56:5F:C2"; //ici pour changer l'adresse MAc du robot
+    private String nxtMAC; // = "00:16:53:56:5F:C2"; //ici pour changer l'adresse MAc du robot
     private Boolean isConnected;
 
     public Context context;
@@ -35,6 +37,16 @@ public class BluetoothConnector{
         this.localAdapter = BluetoothAdapter.getDefaultAdapter();
         this.setBluetoothON();
         this.isConnected = false;
+
+        try {
+            InputStream is = context.getAssets().open("mac.txt");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer); is.close();
+            nxtMAC = new String(buffer);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
     }
 
