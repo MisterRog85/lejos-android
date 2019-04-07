@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">lejos</string>
+    <string name="mac">mac</string>
 </resources>

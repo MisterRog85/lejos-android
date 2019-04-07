@@ -1,19 +1,18 @@
 package com.example.snake.lejos;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
 
     public Button connexion;
     public TextView etat;
+
 
     public BluetoothConnector bluetoothConnector;;
 
@@ -23,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         connexion = (Button) findViewById(R.id.connexion);
         etat = (TextView) findViewById(R.id.etat);
+
         bluetoothConnector = new BluetoothConnector(this);
+
     }
 
     public void connexionAdmin(View view){
@@ -35,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void connexion(View view) {
         if(bluetoothConnector.getIsConnected()){
-            bluetoothConnector.disconnectNXT(view, this);
+            bluetoothConnector.disconnectEV3(view, this);
             connexion.setText("Se connecter");
         } else {
 
-            if(bluetoothConnector.connectNXT(view, this)){
+            if(bluetoothConnector.connectEV3(view, this)){
                 connexion.setText("Se déconnecter");
             };
         }

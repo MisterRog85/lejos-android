@@ -24,7 +24,7 @@ public class AdminLogin extends AppCompatActivity {
     }
 
     public void connexionAdmin (View view) {
-        Log.d("log1 le mdp lu", mdp.getText().toString());
+
         if (mdp.getText().toString().equals(password)){
             Intent intent = new Intent(this, AdminSettings.class);
             startActivity(intent);

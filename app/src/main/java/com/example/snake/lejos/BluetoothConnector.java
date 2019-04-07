@@ -4,12 +4,14 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.content.res.AssetManager;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.UUID;
 
@@ -19,36 +21,36 @@ public class BluetoothConnector{
     private BluetoothSocket socket_nxt;
     private BluetoothDevice nxt;
     private OutputStreamWriter out;
-    private String nxtMAC; // = "00:16:53:56:5F:C2"; //ici pour changer l'adresse MAc du robot
+    private String ev3MAC; // = "00:16:53:56:5F:C2"; //ici pour changer l'adresse MAc du robot
     private Boolean isConnected;
+
+    public SharedPreferences mPreferences;
+    public SharedPreferences.Editor mEditor;
 
     public Context context;
 
-    public String getNxtMAC() {
-        return nxtMAC;
+    public File file;
+
+    public String getEv3MAC() {
+        return ev3MAC;
     }
 
-    public void setNxtMAC(String nxtMAC) {
-        this.nxtMAC = nxtMAC;
+    public void setEv3MAC(String ev3MAC) {
+        this.ev3MAC = ev3MAC;
     }
 
-    public BluetoothConnector(Context ctx) {
+    public BluetoothConnector(Context ctx){
         this.context=ctx;
         this.localAdapter = BluetoothAdapter.getDefaultAdapter();
         this.setBluetoothON();
         this.isConnected = false;
 
-        try {
-            InputStream is = context.getAssets().open("mac.txt");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer); is.close();
-            nxtMAC = new String(buffer);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        mEditor = mPreferences.edit();
 
+        ev3MAC = mPreferences.getString("mac", "00:16:53:56:5F:C2");
     }
+
 
     public void setBluetoothON(){
         if (!this.localAdapter.isEnabled()) {
@@ -66,14 +68,14 @@ public class BluetoothConnector{
         }
     }
 
-    public Boolean connectNXT(View v, Context ctx){
+    public Boolean connectEV3(View v, Context ctx){
         this.context=ctx;
-        this.nxt = this.localAdapter.getRemoteDevice(nxtMAC);
+        this.nxt = this.localAdapter.getRemoteDevice(ev3MAC);
         try {
             this.socket_nxt = nxt.createRfcommSocketToServiceRecord(UUID
                     .fromString("00001101-0000-1000-8000-00805F9B34FB"));
             this.socket_nxt.connect();
-            Toast.makeText(context, "Bluetooth: Connected to NXT", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Bluetooth: Connected to EV3", Toast.LENGTH_LONG).show();
             this.isConnected = true;
             return true;
         } catch (IOException e) {
@@ -94,7 +96,7 @@ public class BluetoothConnector{
         }
     }
 
-    public void disconnectNXT(View v, Context ctx){
+    public void disconnectEV3(View v, Context ctx){
         this.context=ctx;
         try{
             this.out.close();
