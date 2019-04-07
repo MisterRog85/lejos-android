@@ -1,6 +1,7 @@
 package com.example.snake.lejos;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -42,5 +43,10 @@ public class AdminSettings extends AppCompatActivity {
         text = (EditText) findViewById(R.id.mac);
 
         text.setText(bluetoothConnector.getEv3MAC());
+    }
+
+    public void retour(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
