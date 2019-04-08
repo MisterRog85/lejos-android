@@ -48,7 +48,7 @@ public class BluetoothConnector{
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         mEditor = mPreferences.edit();
 
-        ev3MAC = mPreferences.getString("mac", "00:16:53:56:5F:C2");
+        ev3MAC = mPreferences.getString("mac", "00:16:53:5C:89:FD");
     }
 
 

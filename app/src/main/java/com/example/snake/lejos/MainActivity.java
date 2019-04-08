@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fermer (View view) {
-        bluetoothConnector.sendMessage(1);
+        bluetoothConnector.sendMessage(2);
         etat.setText("En fermeture");
     }
 }
